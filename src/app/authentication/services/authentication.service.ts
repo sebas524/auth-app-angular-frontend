@@ -18,10 +18,8 @@ export class AuthenticationService {
   private _authCurrentStatus = signal<AuthStatus>(AuthStatus.checking);
   // * variables up to here are private to prevent direct modification from the outside.
   // * to expose user safely:
-  public currentUser = computed(() => {
-    return this._currentUser;
-    // * why? because computed is a readonly signal, it wont have access to methods such as set for example.
-  });
+  public currentUser = computed(() => this._currentUser());
+  // * why? because computed is a readonly signal, it wont have access to methods such as set for example.
   // * same spiel with _authCurrentStatus:
   public authCurrentStatus = computed(() => {
     return this._authCurrentStatus;

@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../../services/authentication.service';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   templateUrl: './login-page.component.html',
@@ -11,6 +12,8 @@ export class LoginPageComponent {
   // !ATTRIBUTES
   private fb = inject(FormBuilder);
   private authenticationService = inject(AuthenticationService);
+  // * used for navigation between routes:
+  private router = inject(Router);
 
   // !FORM
   public myForm: FormGroup = this.fb.group({
@@ -24,9 +27,11 @@ export class LoginPageComponent {
     const { email, password } = this.myForm.value;
     this.authenticationService.login(email, password).subscribe({
       next: () => {
-        console.log('ALLES GUT!');
+        // * to navigate to dashboard because login credentials where correct:
+        this.router.navigateByUrl('/dashboard');
       },
       error: (errMsg) => {
+        // * sweet alert for error message in case invalid credentials:
         Swal.fire({
           title: 'Error',
           text: errMsg,
