@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { Observable, catchError, map, of, tap, throwError } from 'rxjs';
-import { CheckTokenRes, User, LoginRes } from '../interfaces';
+import { CheckTokenRes, User, LoginRes, RegisterRes } from '../interfaces';
 import { AuthStatus } from '../enums/aut-status.enum';
 import { environment } from '../environments/environments';
 
@@ -39,6 +39,26 @@ export class AuthenticationService {
   }
 
   // !METHODS
+
+  register(name: string, email: string, password: string): Observable<boolean> {
+    const url = `${this.baseurl}/authentication/register`;
+    const body = {
+      name: name,
+      email: email,
+      password: password,
+    };
+    return this.http.post<RegisterRes>(url, body).pipe(
+      map((response) => this.setAuthentication(response)),
+      catchError(
+        // *  if register info given is WRONG then catch error comes into play:
+        (err) => {
+          return throwError(() => {
+            return err.error.message;
+          });
+        }
+      )
+    );
+  }
 
   login(email: string, password: string): Observable<boolean> {
     const url = `${this.baseurl}/authentication/authenticate`;
