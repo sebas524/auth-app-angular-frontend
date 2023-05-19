@@ -3,7 +3,7 @@ import { CanActivateFn, Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 import { AuthStatus } from '../enums/aut-status.enum';
 
-export const isAuthenticatedGuard: CanActivateFn = (route, state) => {
+export const notAuthenticatedGuard: CanActivateFn = (route, state) => {
   // * this guard is in charge of protecting the route. so, if authenticated, he lets user in, if not, then not.
   // console.log('isAuthenticated guard =>', { route, state });
 
@@ -13,13 +13,9 @@ export const isAuthenticatedGuard: CanActivateFn = (route, state) => {
   console.log({ status: authService.authCurrentStatus() });
 
   if (authService.authCurrentStatus() === AuthStatus.authenticated) {
-    return true;
+    router.navigateByUrl('/dashboard');
+    return false;
   }
-  // if (authService.authCurrentStatus() === AuthStatus.checking) {
-  //   return false;
-  // }
 
-  router.navigateByUrl('/authentication/login');
-
-  return false;
+  return true;
 };

@@ -6,4 +6,22 @@
 
   <h3>User</h3>
   <pre>{{ user() | json }}</pre>
+
+  <!-- <span routerLink="/authentication/login">
+    Go Back To Login
+  </span> -->
+  <br />
+  <p>
+    *Guards implemented in code do not allow for authenticated user to access
+    login page. Only way is to click on Logout button, at this point token will
+    be removed from local storage and user will become unauthenticated.
+  </p>
+  <br />
+  <button
+    class="form-btn"
+    routerLink="/authentication/login"
+    (click)="onLogout()"
+  >
+    Logout
+  </button>
 </div>

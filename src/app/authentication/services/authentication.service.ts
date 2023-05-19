@@ -34,7 +34,9 @@ export class AuthenticationService {
   public authCurrentStatus = computed(() => this._authCurrentStatus());
 
   // !CONSTRUCTOR
-  constructor() {}
+  constructor() {
+    this.checkStatusOfAuth().subscribe();
+  }
 
   // !METHODS
 
@@ -65,6 +67,7 @@ export class AuthenticationService {
     const token = localStorage.getItem('token');
     // * if no token found then user is not authenticated:
     if (!token) {
+      this.logout();
       return of(false);
     }
 
@@ -79,5 +82,13 @@ export class AuthenticationService {
         return of(false);
       })
     );
+  }
+
+  logout() {
+    // * to remove from local storage:
+    localStorage.removeItem('token');
+    // * but keep in mind user is still going to be authenticated in memory (_currentUser and _authCurrentStatus) so:
+    this._currentUser.set(null);
+    this._authCurrentStatus.set(AuthStatus.notAunthenticated);
   }
 }
