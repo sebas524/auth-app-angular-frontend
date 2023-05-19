@@ -1,17 +1,22 @@
 <div class="login form">
   <header>Register</header>
-  <form action="#">
-    <input type="text" placeholder="Enter your name" />
+  <form [formGroup]="myForm" (ngSubmit)="register()">
+    <input type="text" placeholder="Enter your name" formControlName="name" />
 
-    <input type="text" placeholder="Enter your email" />
-    <input type="password" placeholder="Enter your password" />
+    <input type="text" placeholder="Enter your email" formControlName="email" />
+    <input
+      type="password"
+      placeholder="Enter your password"
+      formControlName="password"
+    />
     <!-- <a href="#">Forgot password?</a> -->
-    <input type="button" class="button" value="Create Account" />
+
+    <button class="form-btn" [disabled]="myForm.invalid">Create Account</button>
   </form>
   <div class="signup">
     <span class="signup"
       >Already have an account?
-      <label>Signin</label>
+      <label routerLink="/authentication/login">Signin</label>
     </span>
   </div>
 </div>
