@@ -2,13 +2,22 @@
   <header>Register</header>
   <form [formGroup]="myForm" (ngSubmit)="register()">
     <input type="text" placeholder="Enter your name" formControlName="name" />
+    <span class="span-validator" *ngIf="isFieldValid('name')"
+      >name must be more than one character long.
+    </span>
 
     <input type="text" placeholder="Enter your email" formControlName="email" />
+    <span class="span-validator" *ngIf="isFieldValid('email')"
+      >must be valid email address(contain @).
+    </span>
     <input
       type="password"
       placeholder="Enter your password"
       formControlName="password"
     />
+    <span class="span-validator" *ngIf="isFieldValid('password')"
+      >must be at least 6 characters of length.
+    </span>
     <!-- <a href="#">Forgot password?</a> -->
 
     <button class="form-btn" [disabled]="myForm.invalid">Create Account</button>

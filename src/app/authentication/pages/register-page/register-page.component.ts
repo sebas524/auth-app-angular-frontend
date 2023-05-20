@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../../services/authentication.service';
 import Swal from 'sweetalert2';
+import { ValidatorService } from '../../services/validator.service';
 
 @Component({
   templateUrl: './register-page.component.html',
@@ -11,13 +12,25 @@ export class RegisterPageComponent {
   // !ATTRIBUTES
   private fb = inject(FormBuilder);
   private authenticationService = inject(AuthenticationService);
+  private validatorService = inject(ValidatorService);
 
   // !FORM
   public myForm: FormGroup = this.fb.group({
     name: ['mike', [Validators.required, Validators.minLength(1)], []],
-    email: ['mike@gmail.com', [Validators.required, Validators.email], []],
+    email: [
+      'mike@gmail.com',
+      [
+        Validators.required,
+        Validators.pattern(this.validatorService.emailPattern),
+      ],
+      [],
+    ],
     password: ['123456', [Validators.required, Validators.minLength(6)], []],
   });
+
+  isFieldValid(field: string) {
+    return this.validatorService.isFieldValid(this.myForm, field);
+  }
 
   register() {
     console.log('input values =>', this.myForm.value);

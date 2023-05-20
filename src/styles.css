@@ -50,7 +50,9 @@ body {
   width: 100%;
   padding: 0 15px;
   font-size: 17px;
-  margin-bottom: 1.3rem;
+  margin-top: 0.8rem;
+
+  margin-bottom: 0.8rem;
   border: 1px solid #ddd;
   border-radius: 6px;
   outline: none;
@@ -83,12 +85,18 @@ body {
   font-size: 17px;
   margin-bottom: 1.3rem;
   border: none;
-  text-decoration: none;
+  /* text-decoration: none; */
   border-radius: 8px;
 }
 .form-btn:hover {
   background: #006653;
 }
+/* .form-btn:disabled {
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+  cursor: no-drop;
+} */
 
 .signup {
   font-size: 17px;
@@ -100,4 +108,8 @@ body {
 }
 .signup label:hover {
   text-decoration: underline;
+}
+
+.span-validator {
+  color: red;
 }

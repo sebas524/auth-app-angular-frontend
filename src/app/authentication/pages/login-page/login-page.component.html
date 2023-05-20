@@ -2,14 +2,20 @@
   <header>Login</header>
   <form [formGroup]="myForm" (ngSubmit)="login()">
     <input type="text" placeholder="Enter your email" formControlName="email" />
+    <span class="span-validator" *ngIf="isFieldValid('email')"
+      >must be valid email address(contain @).
+    </span>
     <input
       type="password"
       placeholder="Enter your password"
       formControlName="password"
     />
+    <span class="span-validator" *ngIf="isFieldValid('password')"
+      >must be at least 6 characters of length.
+    </span>
     <a href="#">Forgot password?</a>
 
-    <button class="form-btn" [disabled]="myForm.invalid">Login</button>
+    <button [disabled]="myForm.invalid" class="form-btn">Login</button>
   </form>
   <div class="signup">
     <span class="signup"
@@ -18,3 +24,17 @@
     </span>
   </div>
 </div>
+
+<!-- validating -->
+
+<!-- <h2>Form Valid: {{ myForm.valid }}</h2>
+<h2>Form Status: {{ myForm.status }}</h2>
+<h2>Form Pending: {{ myForm.pending }}</h2>
+<h2>Form errors</h2>
+<pre>{{ myForm.errors | json }}</pre>
+
+<h5>Email</h5>
+<pre>{{ myForm.controls["email"].errors | json }}</pre>
+
+<h5>Password</h5>
+<pre>{{ myForm.controls["password"].errors | json }}</pre> -->

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../../services/authentication.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { ValidatorService } from '../../services/validator.service';
 
 @Component({
   templateUrl: './login-page.component.html',
@@ -14,18 +15,31 @@ export class LoginPageComponent {
   private authenticationService = inject(AuthenticationService);
   // * used for navigation between routes:
   private router = inject(Router);
+  private validatorService = inject(ValidatorService);
 
   // !FORM
   public myForm: FormGroup = this.fb.group({
-    email: ['j@gmail.co', [Validators.required, Validators.email], []],
-    password: ['123456', [Validators.required, Validators.minLength(6)], []],
+    email: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern(this.validatorService.emailPattern),
+      ],
+      [],
+    ],
+    password: ['', [Validators.required, Validators.minLength(6)], []],
   });
   // !CONSTRUCTOR
   // !METHODS
+  isFieldValid(field: string) {
+    return this.validatorService.isFieldValid(this.myForm, field);
+  }
+
   login() {
     console.log('input values =>', this.myForm.value);
+
     const { email, password } = this.myForm.value;
-    this.authenticationService.login(email, password).subscribe({
+    return this.authenticationService.login(email, password).subscribe({
       next: () => {
         // * to navigate to dashboard because login credentials where correct:
         this.router.navigateByUrl('/dashboard');
